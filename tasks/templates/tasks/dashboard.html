@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Add this welcome message at the top -->
+<h1>Welcome, {{ user.username }}!</h1>
+<h2>Your Tasks</h2>
+
+<a href="{% url 'tasks:task_create' %}">Add New Task</a>
+
+<!-- Priority Filter Dropdown -->
+<div style="margin: 20px 0;">
+    <form method="get">
+        <label for="priority">Filter by Priority:</label>
+        <select name="priority" id="priority" onchange="this.form.submit()">
+            <option value="">All Priorities</option>
+            <option value="critical" {% if request.GET.priority == 'critical' %}selected{% endif %}>Critical</option>
+            <option value="high" {% if request.GET.priority == 'high' %}selected{% endif %}>High</option>
+            <option value="normal" {% if request.GET.priority == 'normal' %}selected{% endif %}>Normal</option>
+            <option value="low" {% if request.GET.priority == 'low' %}selected{% endif %}>Low</option>
+        </select> {% if request.GET.priority %}
+        <a href="{% url 'tasks:dashboard' %}">Clear Filter</a> {% endif %}
+    </form>
+</div>
+
+{% for task in tasks %}
+<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+    <h3>{{ task.title }}</h3>
+    <p><strong>Category:</strong> {{ task.category.name }}</p>
+    <p><strong>Due:</strong> {{ task.due_date }}</p>
+    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+    {% if task.description %}
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
+</div>
+{% empty %}
+<p>No tasks yet. <a href="{% url 'tasks:task_create' %}">Add your first task!</a></p>
+{% endfor %} {% endblock %}

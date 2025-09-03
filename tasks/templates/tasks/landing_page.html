@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to PyTasks</h1>
+<p>Lorem ipsum dolor sit amet consectetur.</p>
+<br>
+<a href="{% url 'accounts:login' %}">Log In</a>
+<a href="{% url 'accounts:signup' %}">Sign Up</a>
+{% endblock %}
