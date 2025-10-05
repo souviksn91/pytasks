@@ -1,0 +1,261 @@
+/* fonts  */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+/* ubuntu font  */
+
+.ubuntu-light {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.ubuntu-regular {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.ubuntu-medium {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.ubuntu-bold {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+/* 
+All colours
+Green - #488B5E
+Dark - #1A2420
+Gray - #626966
+Light - #CED4D2
+*/
+
+
+/* 
+All fonts
+Main heading - Med 24 - 1A2420  
+Sub heading - Med 18 - 1A2420  
+Gray text - Reg 16 - 626966  
+Black text - Reg 16 - 1A2420  
+Small gray text - Reg 14 - 626966  
+Small black text - Reg 14 - 1A2420  
+Green link text - Reg 16 - 488B5E - Underline
+Black link text - Reg 16 - 1A2420 - Underline 
+*/
+
+.black-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #1A2420;
+    text-decoration: none;
+}
+
+.bigger-gray-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1.4;
+    color: #626966;
+    text-decoration: none;
+}
+
+.gray-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #626966;
+    text-decoration: none;
+}
+
+.heading-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 26px;
+    line-height: 1.4;
+    color: #1A2420;
+    text-decoration: none;
+}
+
+.sub-heading-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #1A2420;
+    text-decoration: none;
+}
+
+.small-black-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #1A2420;
+    text-decoration: none;
+    list-style-type: none !important;
+}
+
+.small-gray-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #626966;
+    text-decoration: none;
+}
+
+.super-small-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #1A2420;
+    text-decoration: none;
+}
+
+.black-link-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #1A2420;
+    text-decoration: underline;
+}
+
+.green-link-text {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #488B5E;
+    text-decoration: underline;
+}
+
+
+/* Remove bullets from form error text   */
+
+
+/* Remove bullet points from error messages */
+
+.error-no-bullet ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.error-no-bullet li {
+    list-style-type: none !important;
+}
+
+
+/* Style for form field errors */
+
+.small-black-text ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.small-black-text li {
+    list-style-type: none !important;
+}
+
+
+/* Bootstrap invalid state styling */
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.container-lg {
+    max-width: 1280px;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: "Ubuntu", sans-serif;
+}
+
+footer {
+    margin-top: auto;
+    /* pushes footer down */
+}
+
+.custom-footer {
+    border-top: 1px solid #CED4D2;
+    margin-top: 60px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.nav-bottom-border {
+    border-bottom: 1px solid #CED4D2 !important;
+    margin-bottom: 20px !important;
+}
+
+.nav-top-bottom-padding {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+}
+
+
+/* button  */
+
+.bttn-green {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #488B5E;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    padding: 0 20px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.4s ease;
+}
+
+.bttn-green:hover {
+    background-color: #30834B;
+    color: #ffffff;
+}
+
+.bttn-green:active {
+    background-color: #30834B !important;
+    color: #ffffff !important;
+}
+
+.form-control {
+    height: 40px;
+}
+
+.desc-form-control {
+    height: 80px !important;
+}

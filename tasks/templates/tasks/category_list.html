@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Your Categories</h1>
+
+<!-- Category Statistics -->
+<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; background-color: #f9f9f9;">
+    <h3>Category Summary</h3>
+    <p><strong>Total Categories:</strong> {{ total_categories }}</p>
+</div>
+
+<a href="{% url 'tasks:category_create' %}">Add New Category</a> {% for category in categories %}
+<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+    <h3>{{ category.name }}</h3>
+    <p><strong>Total Tasks:</strong> {{ category.total_tasks }}</p>
+    <p><strong>Pending:</strong> {{ category.pending_tasks }}</p>
+    <p><strong>Completed:</strong> {{ category.completed_tasks }}</p>
+    <div style="margin-top: 10px;">
+        <a href="{% url 'tasks:category_detail' category.pk %}" style="margin-right: 10px;">Detail</a>
+        <a href="{% url 'tasks:category_update' category.pk %}" style="margin-right: 10px;">Edit</a>
+        <a href="{% url 'tasks:category_delete' category.pk %}" style="color: #dc3545;">Delete</a>
+    </div>
+</div>
+{% empty %}
+<p>No categories yet. <a href="{% url 'tasks:category_create' %}">Add your first category!</a></p>
+{% endfor %} {% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-8">
+
+        <h2 class="heading-text">Welcome Back</h2>
+
+        {% if form.non_field_errors %}
+        <div class="small-black-text" role="alert">Invalid username or password. Please try again.</div>
+        {% endif %}
+
+        <form method="post" class="">
+            {% csrf_token %}
+
+            <div class="row mt-3 mb-3">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}" class="black-text">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Enter your username" required id="{{ form.username.id_for_label }}">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}" class="black-text">Password</label>
+                        <input type="password" name="password" class="form-control auth-input" placeholder="Enter your password" required id="{{ form.password.id_for_label }}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn bttn-green">Log In</button>
+            </div>
+        </form>
+
+        <div class="mt-4">
+            <p class="mb-0 black-text">Don't have an account? <a href="{% url 'accounts:signup' %}" class="green-link-text">Sign Up here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

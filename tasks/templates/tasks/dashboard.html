@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Welcome, {{ user.username }}!</h1>
+
+<!-- Task Statistics -->
+<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; background-color: #f9f9f9;">
+    <h3>Your Task Summary</h3>
+    <p><strong>Total Tasks:</strong> {{ total_tasks }}</p>
+    <p><strong>Pending:</strong> {{ pending_tasks }}</p>
+    <p><strong>Completed:</strong> {{ completed_tasks }}</p>
+</div>
+
+<h2>Your Pending Tasks</h2>
+<a href="{% url 'tasks:task_create' %}">Add New Task</a>
+
+<!-- Priority Filter Dropdown -->
+<div style="margin: 20px 0;">
+    <form method="get">
+        <label for="priority">Filter by Priority:</label>
+        <select name="priority" id="priority" onchange="this.form.submit()">
+            <option value="">All Priorities</option>
+            <option value="critical" {% if request.GET.priority == 'critical' %}selected{% endif %}>Critical</option>
+            <option value="high" {% if request.GET.priority == 'high' %}selected{% endif %}>High</option>
+            <option value="normal" {% if request.GET.priority == 'normal' %}selected{% endif %}>Normal</option>
+            <option value="low" {% if request.GET.priority == 'low' %}selected{% endif %}>Low</option>
+        </select> {% if request.GET.priority %}
+        <a href="{% url 'tasks:dashboard' %}">Clear Filter</a> {% endif %}
+    </form>
+</div>
+
+{% for task in tasks %}
+<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+    <h3>{{ task.title }}</h3>
+    <p><strong>Category:</strong> {{ task.category.name }}</p>
+    <p><strong>Due:</strong> {{ task.due_date }}</p>
+    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+    {% if task.description %}
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 10px;">
+        <a href="{% url 'tasks:task_update' task.pk %}" style="margin-right: 10px;">Edit</a>
+        <a href="{% url 'tasks:task_delete' task.pk %}" style="margin-right: 10px; color: #dc3545;">Delete</a>
+        <a href="{% url 'tasks:task_complete' task.pk %}" style="color: #28a745;">Mark as Done</a>
+    </div>
+</div>
+{% empty %} {% comment %}
+<p>No pending tasks. <a href="{% url 'tasks:task_create' %}">Add your first task!</a></p> {% endcomment %} {% endfor %} {% endblock %}

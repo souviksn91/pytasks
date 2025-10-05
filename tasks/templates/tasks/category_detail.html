@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Category: {{ category.name }}</h1>
+
+<p><strong>Total Tasks:</strong> {{ category.total_tasks }}</p>
+<p><strong>Pending:</strong> {{ category.pending_tasks }}</p>
+<p><strong>Completed:</strong> {{ category.completed_tasks }}</p>
+
+<div style="margin: 20px 0;">
+    <a href="{% url 'tasks:category_list' %}">Back to All Categories</a>
+</div>
+
+<h2>Pending Tasks in this Category</h2>
+
+{% for task in tasks %}
+<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+    <h3>{{ task.title }}</h3>
+    <p><strong>Due:</strong> {{ task.due_date }}</p>
+    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+    {% if task.description %}
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 10px;">
+        <a href="{% url 'tasks:task_update' task.pk %}" style="margin-right: 10px;">Edit</a>
+        <a href="{% url 'tasks:task_delete' task.pk %}" style="margin-right: 10px; color: #dc3545;">Delete</a>
+        <a href="{% url 'tasks:task_complete' task.pk %}" style="color: #28a745;">Mark as Done</a>
+    </div>
+</div>
+{% empty %}
+<p>No pending tasks in this category.</p>
+{% endfor %} {% endblock %}

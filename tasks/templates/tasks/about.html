@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-10">
+
+        <div class="mx-auto mt-2" style="max-width: 80%;">
+            <h1 class="heading-text text-center">Your Simple & Powerful Task Manager</h1>
+            <div class="bigger-gray-text mt-3 text-center">
+                <p>PyTasks is a Django-based task management solution that combines essential functionality with a minimalist design. Users can create accounts, organize tasks with categories and priorities, set due dates, and track completion through an
+                    intuitive Archives system. The platform features efficient search capabilities and priority filtering to help users maintain focus and productivity through a clean, user-friendly interface.
+                </p>
+                <p>
+                    This full-stack application is built with Django (Python), MySQL, and Bootstrap, featuring secure authentication and responsive design.
+                </p>
+
+                <div class="mt-4">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'tasks:dashboard' %}" class="btn bttn-green">Go to Dashboard</a> {% else %}
+                    <a href="{% url 'accounts:login' %}" class="btn bttn-green">Login to Get Started</a> {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

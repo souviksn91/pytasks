@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8 col-lg-8">
+
+        <h2 class="heading-text">{% if object %}Edit{% else %}Add New{% endif %} Category</h2>
+
+
+
+        <form method="post" class="">
+            {% csrf_token %}
+
+            <div class="row mt-3 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="black-text">Category Name *</label>
+                    <input type="text" name="name" class="form-control" placeholder="e.g., Work, Personal, Shopping" required id="{{ form.name.id_for_label }}" value="{{ form.name.value|default:'' }}" maxlength="100"> {% if form.name.errors %}
+                    <div class="small-black-text">{{ form.name.errors }}</div>
+                    {% endif %}
+                    <div class="small-gray-text">
+                        Maximum 100 characters. Category names must be unique.
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end align-items-center mt-4">
+                <a href="{% url 'tasks:category_list' %}" class="green-link-text me-md-2">Back to Categories</a>
+                <button type="submit" class="btn bttn-green">{% if object %}Update{% else %}Create{% endif %} Category</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

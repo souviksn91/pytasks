@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Archives - Completed Tasks</h1>
+
+<!-- Archives Summary -->
+<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; background-color: #f9f9f9;">
+    <h3>Archives Summary</h3>
+    <p><strong>Total Completed Tasks:</strong> {{ total_completed }}</p>
+
+    <!-- Delete All Button -->
+    {% if total_completed > 0 %}
+    <form action="{% url 'tasks:delete_all_archived' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+            Delete All Completed Tasks
+        </button>
+    </form>
+    {% endif %}
+</div>
+
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'tasks:dashboard' %}">Back to Dashboard</a>
+</div>
+
+{% for task in completed_tasks %}
+<div style="border: 1px solid #ccc; margin: 10px; padding: 10px; background-color: #f8f9fa;">
+    <h3>{{ task.title }}</h3>
+    <p><strong>Category:</strong> {{ task.category.name }}</p>
+    <p><strong>Completed on:</strong> {{ task.updated_date|date:"F j, Y" }}</p>
+    <p><strong>Original Due Date:</strong> {{ task.due_date }}</p>
+    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+    {% if task.description %}
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    {% endif %}
+
+    <!-- Delete Permanently Button (straight deletion) -->
+    <div style="margin-top: 10px;">
+        <a href="{% url 'tasks:delete_archived_task' task.pk %}" style="color: #dc3545;">
+               Delete Permanently
+            </a>
+    </div>
+</div>
+{% empty %}
+<p>No completed tasks yet. Complete some tasks to see them here!</p>
+{% endfor %}
+
+<!-- Pagination -->
+{% if is_paginated %}
+<div style="margin-top: 20px;">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Previous</a> {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span> {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Next</a> {% endif %}
+</div>
+{% endif %} {% endblock %}

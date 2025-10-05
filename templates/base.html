@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyTasks - Your Simple Task Manager</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <!-- Icons Font Awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body class="container-lg d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary nav-top-bottom-padding nav-bottom-border" style="background-color: white !important;">
+            <div class="container-fluid">
+                <div>
+                    <a href="{% url 'tasks:dashboard' %}" class="d-inline-flex link-body-emphasis text-decoration-none" style="vertical-align: middle;">
+                        <img src="{% static 'images/pytasks.svg' %}" class="" alt="PyTasks">
+                    </a>
+                </div>
+
+                <div class="d-flex">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn bttn-green mx-4" href="{% url 'tasks:task_create' %}">Add Task</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'tasks:dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'tasks:category_list' %}">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'tasks:archives' %}">Archives</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'tasks:search' %}">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'tasks:about' %}">About</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button class="nav-link black-text" type="submit" style="text-decoration: none; background: none;">Logout ({{ user.username }})</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link black-text" href="{% url 'accounts:login' %}">Login</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- MAIN BLOCK  -->
+    <main class="container-fluid flex-grow-1 py-4">
+        {% block content %}
+        <!-- Content from child templates will go here -->
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER  -->
+    <div class="custom-footer text-center">
+        <footer class="">
+            <p class="small-gray-text">Created by <span class="black-text">Souvik Sinha</span></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
