@@ -19,31 +19,57 @@ PyTasks is a **clean, minimalist task management web application** built with Dj
 
 <hr>
 
-## Setup Instructions
-1. **Clone the repository:**
+
+
+### Installation
+
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/souviksn91/pycontacts.git
-   cd pycontacts
+   git clone https://github.com/yourusername/pytasks.git
+   cd pytasks
    ```
 
-2. **Create a virtual environment:**
+2. **Create virtual environment**
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
-
-3. **Install dependencies:**
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configure database:**
-    Create MySQL database (see DATABASE.md)
 
-5. **Run the app:**
-   ```bash
-   python app.py
+### Database Setup
+
+1. **Create MySQL database and user**
+   ```sql
+   CREATE DATABASE pytasks;
+   CREATE USER 'pytasks_user'@'localhost' IDENTIFIED BY 'your_password';
+   GRANT ALL PRIVILEGES ON pytasks.* TO 'pytasks_user'@'localhost';
+   FLUSH PRIVILEGES;
    ```
-6. **Access in browser:**
-   http://127.0.0.1:5000/
-   
+
+2. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your actual database credentials
+   ```
+
+3. **Run migrations**
+   ```bash
+   python manage.py migrate
+   ```
+
+4. **Create superuser (optional)**
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+### Run the Application
+   ```bash
+   python manage.py runserver
+   ```
+
+
+
