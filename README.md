@@ -1,7 +1,7 @@
 # PyTasks - Django Task Manager
 PyTasks is a **clean, minimalist task management web application** built with Django. Organize your tasks with categories, priorities, and due dates in a simple, intuitive interface.
 
-![Image](https://github.com/souviksn91/pytasks/blob/4f92219247583918064a6b358cf8d1b6febb9b5c/GITHUB%20IMAGES%20(1).png)
+![Image](https://github.com/souviksn91/pytasks/blob/main/GITHUB%20IMAGES%20(1).png?raw=true)
 
 
 
