@@ -15,7 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-load_dotenv()  # Load environment variables from a .env file if present
+load_dotenv()  # Load environment variables from the .env 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,5 +138,5 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'tasks:dashboard'  # The name of your landing page URL
-LOGOUT_REDIRECT_URL = 'accounts:login'  # Where to go after logout (optional, but good to set)
+LOGOUT_REDIRECT_URL = 'accounts:login'  # Where to go after logout (optional)
 

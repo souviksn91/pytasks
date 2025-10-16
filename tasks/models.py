@@ -28,7 +28,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('tasks:category_detail', kwargs={'pk': self.pk})
 
-    # Add these methods to get task counts
+    # Get task counts
     def total_tasks(self):
         return self.tasks.count()
 
@@ -55,29 +55,28 @@ class Task(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        # Default ordering: show incomplete tasks first, then sort by priority and due date
-        ordering = ['is_completed', '-priority', 'due_date']
+        # Sort by due date and priority
+        ordering = ['is_completed', 'due_date', '-priority']
 
     def __str__(self):
         return self.title
     
-    def clean(self):
-        super().clean()
-        # Check if due_date is in the past (only for new tasks or when due_date is changed)
-        if self.due_date and self.due_date < timezone.now().date():
-            raise ValidationError({'due_date': 'Due date cannot be in the past.'})
+    # def clean(self):
+    #     super().clean()
+    #     # Check if due_date is in the past (only for new tasks or when due_date is changed)
+    #     if self.due_date and self.due_date < timezone.now().date():
+    #         raise ValidationError({'due_date': 'Due date cannot be in the past.'})
         
-    def save(self, *args, **kwargs):
-        self.full_clean()  # This runs the clean() method and all field validations
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.full_clean()  # This runs the clean() method and all field validations
+    #     super().save(*args, **kwargs)
 
     
     def get_absolute_url(self):
-        # We can decide where to send the user after creating/editing a task.
-        # Sending them to the dashboard is a safe bet.
+        # Sending users to the dashboard
         return reverse('tasks:dashboard')
 
     def is_overdue(self):
-        """Helper method to check if the task is overdue."""
+        # Helper method to check if the task is overdue 
         return self.due_date < timezone.now().date() if not self.is_completed else False
     

@@ -155,9 +155,6 @@ Black link text - Reg 16 - 1A2420 - Underline
 
 /* Remove bullets from form error text   */
 
-
-/* Remove bullet points from error messages */
-
 .error-no-bullet ul {
     list-style-type: none !important;
     padding-left: 0 !important;
@@ -210,7 +207,7 @@ footer {
     padding-bottom: 12px;
 }
 
-.nav-bottom-border {
+.bottom-border {
     border-bottom: 1px solid #CED4D2 !important;
     margin-bottom: 20px !important;
 }
@@ -221,7 +218,7 @@ footer {
 }
 
 
-/* button  */
+/* Button  */
 
 .bttn-green {
     font-family: "Ubuntu", sans-serif;
@@ -252,10 +249,52 @@ footer {
     color: #ffffff !important;
 }
 
+.bttn-black {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #1A2420;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    padding: 0 20px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.4s ease;
+}
+
+.bttn-black:hover {
+    background-color: #626966;
+    color: #ffffff;
+}
+
+.bttn-black:active {
+    background-color: #626966 !important;
+    color: #ffffff !important;
+}
+
 .form-control {
     height: 40px;
 }
 
 .desc-form-control {
     height: 80px !important;
+}
+
+
+/* Task Card Styles */
+
+.task-card {
+    border-radius: 10px;
+    border: 1px solid #626966;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    border: 1px solid #1A2420;
 }

@@ -1,48 +1,93 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Welcome, {{ user.username }}!</h1>
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<!-- Task Statistics -->
-<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; background-color: #f9f9f9;">
-    <h3>Your Task Summary</h3>
-    <p><strong>Total Tasks:</strong> {{ total_tasks }}</p>
-    <p><strong>Pending:</strong> {{ pending_tasks }}</p>
-    <p><strong>Completed:</strong> {{ completed_tasks }}</p>
-</div>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-8">
 
-<h2>Your Pending Tasks</h2>
-<a href="{% url 'tasks:task_create' %}">Add New Task</a>
+        <!-- Stats  -->
+        <div class="bottom-border pb-2">
+            <p class="gray-text mb-1">Welcome, <span class="black-text" style="font-weight: 500;">{{ user.username }}</span>!</p>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="heading-text mb-0">Your Task Summary</h2>
+                <a class="btn bttn-green" href="{% url 'tasks:task_create' %}">Add New Task</a>
+            </div>
+            <p class="gray-text">
+                Total Tasks:<span class="black-text me-2"> {{ total_tasks }}</span> Pending:
+                <span class="black-text me-2"> {{ pending_tasks }}</span> Completed: <span class="black-text"> {{ completed_tasks }}</span>
+            </p>
+        </div>
 
-<!-- Priority Filter Dropdown -->
-<div style="margin: 20px 0;">
-    <form method="get">
-        <label for="priority">Filter by Priority:</label>
-        <select name="priority" id="priority" onchange="this.form.submit()">
-            <option value="">All Priorities</option>
-            <option value="critical" {% if request.GET.priority == 'critical' %}selected{% endif %}>Critical</option>
-            <option value="high" {% if request.GET.priority == 'high' %}selected{% endif %}>High</option>
-            <option value="normal" {% if request.GET.priority == 'normal' %}selected{% endif %}>Normal</option>
-            <option value="low" {% if request.GET.priority == 'low' %}selected{% endif %}>Low</option>
-        </select> {% if request.GET.priority %}
-        <a href="{% url 'tasks:dashboard' %}">Clear Filter</a> {% endif %}
-    </form>
-</div>
 
-{% for task in tasks %}
-<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-    <h3>{{ task.title }}</h3>
-    <p><strong>Category:</strong> {{ task.category.name }}</p>
-    <p><strong>Due:</strong> {{ task.due_date }}</p>
-    <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
-    {% if task.description %}
-    <p><strong>Description:</strong> {{ task.description }}</p>
-    {% endif %}
+        <!-- Heading  -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="heading-text mb-0">Your Pending Tasks ({{ pending_tasks }})</h2>
+            <div class="d-flex align-items-center">
+                <form method="get" class="d-flex align-items-center">
+                    <label for="priority" class="gray-text me-2">Filter by Priority:</label>
+                    <select name="priority" id="priority" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; min-width: 120px;">
+                        <option value="">All Priorities</option>
+                        <option value="critical" {% if request.GET.priority == 'critical' %}selected{% endif %}>Critical</option>
+                        <option value="high" {% if request.GET.priority == 'high' %}selected{% endif %}>High</option>
+                        <option value="normal" {% if request.GET.priority == 'normal' %}selected{% endif %}>Normal</option>
+                        <option value="low" {% if request.GET.priority == 'low' %}selected{% endif %}>Low</option>
+                    </select> {% if request.GET.priority %}
+                    <a href="{% url 'tasks:dashboard' %}" class="btn btn-outline-secondary btn-sm ms-2">Clear</a> {% endif %}
+                </form>
+            </div>
+        </div>
 
-    <!-- Action Buttons -->
-    <div style="margin-top: 10px;">
-        <a href="{% url 'tasks:task_update' task.pk %}" style="margin-right: 10px;">Edit</a>
-        <a href="{% url 'tasks:task_delete' task.pk %}" style="margin-right: 10px; color: #dc3545;">Delete</a>
-        <a href="{% url 'tasks:task_complete' task.pk %}" style="color: #28a745;">Mark as Done</a>
+
+
+        <!-- Task Cards  -->
+        {% for task in tasks %}
+        <div class="card task-card mb-4">
+            <div class="card-body">
+                <div class="bottom-border" style="margin-bottom: 12px!important;">
+                    <h3 class="sub-heading-text">{{ task.title }}</h3>
+
+                    <p class="gray-text mb-2">Category:<span class="black-text me-2"> {{ task.category.name }}</span></p>
+
+                    {% if task.description %}
+                    <p class="gray-text mb-2">{{ task.description }}</p>
+                    {% endif %}
+
+                    <p class="gray-text">
+                        Due:<span class="black-text me-2"> {{ task.due_date }}</span> Priority:
+                        <span class="black-text me-2"> {{ task.get_priority_display }}</span>
+                    </p>
+                </div>
+
+
+                <div class="mt-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="{% url 'tasks:task_complete' task.pk %}" class="btn bttn-green">Mark as Done</a>
+                        </div>
+
+                        <div>
+                            <a href="{% url 'tasks:task_update' task.pk %}" class="black-link-text me-2">Edit</a>
+                            <a href="{% url 'tasks:task_delete' task.pk %}" class="black-link-text">Delete</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class="mt-3">
+            <p class="gray-text">Get started by creating your first task!</p>
+            <a href="{% url 'tasks:task_create' %}" class="btn bttn-green">Add Your First Task</a>
+        </div>
+        {% endfor %}
+
+
     </div>
+
 </div>
-{% empty %} {% comment %}
-<p>No pending tasks. <a href="{% url 'tasks:task_create' %}">Add your first task!</a></p> {% endcomment %} {% endfor %} {% endblock %}
+
+
+
+{% endblock %}

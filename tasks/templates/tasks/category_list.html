@@ -1,24 +1,43 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Your Categories</h1>
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<!-- Category Statistics -->
-<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; background-color: #f9f9f9;">
-    <h3>Category Summary</h3>
-    <p><strong>Total Categories:</strong> {{ total_categories }}</p>
-</div>
 
-<a href="{% url 'tasks:category_create' %}">Add New Category</a> {% for category in categories %}
-<div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-    <h3>{{ category.name }}</h3>
-    <p><strong>Total Tasks:</strong> {{ category.total_tasks }}</p>
-    <p><strong>Pending:</strong> {{ category.pending_tasks }}</p>
-    <p><strong>Completed:</strong> {{ category.completed_tasks }}</p>
-    <div style="margin-top: 10px;">
-        <a href="{% url 'tasks:category_detail' category.pk %}" style="margin-right: 10px;">Detail</a>
-        <a href="{% url 'tasks:category_update' category.pk %}" style="margin-right: 10px;">Edit</a>
-        <a href="{% url 'tasks:category_delete' category.pk %}" style="color: #dc3545;">Delete</a>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="heading-text">Your Categories ({{ total_categories }})</h2>
+            <a class="btn bttn-green" href="{% url 'tasks:category_create' %}">Add New Category</a>
+        </div>
+
+        {% for category in categories %}
+        <div class="bottom-border pb-3 mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="pb-2">
+                    <h3 class="sub-heading-text">{{ category.name }}</h3>
+                </div>
+
+                <div>
+                    <a href="{% url 'tasks:category_detail' category.pk %}" class="black-link-text me-2">View Tasks</a>
+                    <a href="{% url 'tasks:category_update' category.pk %}" class="black-link-text me-2">Edit</a>
+                    <a href="{% url 'tasks:category_delete' category.pk %}" class="black-link-text">Delete</a>
+                </div>
+            </div>
+            <p class="gray-text mb-0">
+                Total Tasks:<span class="black-text me-2"> {{ category.total_tasks }}</span> Pending: <span class="black-text me-2"> {{ category.pending_tasks }}</span> Completed: <span class="black-text"> {{ category.completed_tasks }}</span>
+            </p>
+        </div>
+        {% empty %}
+
+        <div class="mt-4">
+            <p class="gray-text mb-1">No categories yet. </p>
+            <a href="{% url 'tasks:category_create' %}" class="green-link-text">Add your first category!</a>
+        </div>
+
+        {% endfor %}
+
+
+
     </div>
 </div>
-{% empty %}
-<p>No categories yet. <a href="{% url 'tasks:category_create' %}">Add your first category!</a></p>
-{% endfor %} {% endblock %}
+
+
+{% endblock %}

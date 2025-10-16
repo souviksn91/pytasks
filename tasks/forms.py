@@ -1,15 +1,12 @@
+# tasks/forms.py 
+
 from django import forms
 from .models import Task, Category
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 
-
-
-
-
-
-
+# Category form 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -27,7 +24,6 @@ class CategoryForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def clean_name(self):
-        """Check if category name already exists for this user"""
         name = self.cleaned_data.get('name')
         
         if self.user and name:
@@ -48,7 +44,7 @@ class CategoryForm(forms.ModelForm):
 
 
 
-
+# Task form 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -68,27 +64,27 @@ class TaskForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         
-        # Get or create the "General" category for this user
+        # Create "General" category for this user
         general_category, created = Category.objects.get_or_create(
             user=user,
             name='General',
             defaults={'user': user}
         )
         
-        # Now get ALL categories for this user, which now includes General
+        # Get ALL categories for this user, which now includes General
         user_categories = Category.objects.filter(user=user)
         
         # Set the queryset for the category field
         self.fields['category'].queryset = user_categories
         
-        # Optional: Set "General" as the default selected choice
+        # Set "General" as the default selected choice
         self.fields['category'].initial = general_category
         
         # Set the minimum date for the date input field (HTML5 validation)
         self.fields['due_date'].widget.attrs['min'] = timezone.now().date().isoformat()
 
     def clean_due_date(self):
-        """Custom validation to ensure due date is not in the past"""
+        # Custom validation to ensure due date is not in the past 
         due_date = self.cleaned_data.get('due_date')
         
         if due_date and due_date < timezone.now().date():

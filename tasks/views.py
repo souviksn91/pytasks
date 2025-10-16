@@ -26,9 +26,11 @@ from django.utils import timezone
 
 
 
+
 class AboutView(TemplateView):
-    """View for the About page - accessible to everyone (no login required)"""
     template_name = 'tasks/about.html'
+
+
 
 
 
@@ -59,6 +61,8 @@ class DashboardView(LoginRequiredMixin, ListView):
 
 
 
+
+
     
 
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -77,13 +81,17 @@ class CategoryListView(LoginRequiredMixin, ListView):
     
 
 
+
+
+
+
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = 'tasks/category_detail.html'
     context_object_name = 'category'
 
     def get_queryset(self):
-        """Ensure users can only view their own categories"""
+        # Ensure users can only view their own categories 
         return Category.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
@@ -95,6 +103,10 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
     
 
 
+
+
+
+
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CategoryForm
@@ -102,7 +114,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('tasks:category_list')
 
     def get_form_kwargs(self):
-        """Pass the current user to the form for validation"""
+        # Pass the current user to the form for validation 
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
@@ -114,6 +126,12 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     
 
 
+
+
+
+
+
+
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
@@ -121,14 +139,18 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('tasks:category_list')
 
     def get_form_kwargs(self):
-        """Pass the current user to the form for validation"""
+        # Pass the current user to the form for validation
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
     def get_queryset(self):
-        """Ensure users can only edit their own categories"""
+        # Ensure users can only edit their own categories 
         return Category.objects.filter(user=self.request.user)
+
+
+
+
 
 
 
@@ -137,21 +159,21 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
 class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     success_url = reverse_lazy('tasks:category_list')
-    template_name = 'tasks/category_confirm_delete.html'  # We'll create this for confirmation
+    template_name = 'tasks/category_confirm_delete.html'  
 
     def get_queryset(self):
-        """Ensure users can only delete their own categories"""
+        # Ensure users can only delete their own categories 
         return Category.objects.filter(user=self.request.user)
 
     def delete(self, request, *args, **kwargs):
-        """
-        Handle category deletion. 
-        Due to CASCADE delete, all associated tasks will be automatically deleted.
-        """
+        # Due to cascade delete, all associated tasks will be automatically deleted 
         self.object = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()
         return redirect(success_url)
+
+
+
 
 
 
@@ -165,20 +187,25 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('tasks:dashboard')
 
     def get_form_kwargs(self):
-        """Pass the current user to the form to filter categories"""
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
-        """Add current date to context for the date input min attribute"""
+        # Add current date to context for the date input min attribute 
         context = super().get_context_data(**kwargs)
-        context['today'] = timezone.now().date().isoformat()  # <-- NOW THIS WORKS
+        context['today'] = timezone.now().date().isoformat() 
         return context
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+
+
+
+
 
 
 
@@ -189,19 +216,18 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('tasks:dashboard')
 
     def get_form_kwargs(self):
-        """Pass the current user to the form to filter categories"""
+        # Pass the current user to the form to filter categories
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
-        """Add current date to context for the date input min attribute"""
+        # Add current date to context for the date input min attribute 
         context = super().get_context_data(**kwargs)
-        context['today'] = timezone.now().date().isoformat()  # <-- NOW THIS WORKS
+        context['today'] = timezone.now().date().isoformat()  
         return context
 
     def get_queryset(self):
-        """Ensure users can only edit their own tasks"""
         return Task.objects.filter(user=self.request.user)
 
     
@@ -209,22 +235,34 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
+
+
+
+
 @login_required
 def task_delete(request, pk):
-    """Delete a task immediately without confirmation"""
+    # Delete a task immediately without confirmation 
     task = get_object_or_404(Task, pk=pk, user=request.user)
     task.delete()
     return redirect('tasks:dashboard')
     
 
 
+
+
+
+
+
+
 @login_required
 def mark_task_done(request, pk):
-    """Simple view to mark a task as completed"""
     task = get_object_or_404(Task, pk=pk, user=request.user)
     task.is_completed = True
     task.save()
     return redirect('tasks:dashboard')
+
+
+
 
 
 
@@ -236,30 +274,35 @@ class ArchivedTaskListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        """Show only completed tasks for the logged-in user"""
+        # Show only completed tasks for the logged-in user 
         return Task.objects.filter(user=self.request.user, is_completed=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Add counts for the summary
+        # Add counts 
         context['total_completed'] = Task.objects.filter(
             user=self.request.user, 
             is_completed=True
         ).count()
         return context
 
+
+
+
+
 @login_required
 def delete_archived_task(request, pk):
-    """Permanently delete a completed task from archives (no confirmation)"""
+    # Permanently delete a completed task from archives without confirmation 
     task = get_object_or_404(Task, pk=pk, user=request.user, is_completed=True)
     task.delete()
     return redirect('tasks:archives')
 
+
 @login_required
 def delete_all_archived_tasks(request):
-    """Delete all completed tasks at once (no confirmation)"""
+    # Permanently delete all completed tasks without confirmation 
     if request.method == 'POST':
-        # Delete all completed tasks for the current user
+        # Only for the current user
         Task.objects.filter(user=request.user, is_completed=True).delete()
     return redirect('tasks:archives')
 
@@ -268,17 +311,18 @@ def delete_all_archived_tasks(request):
 
 
 
+
+
+
+
 @login_required
 def search_tasks(request):
-    """
-    Search view that shows results on the same page.
-    Searches only pending tasks by title and description.
-    """
+
     query = request.GET.get('q', '')
     tasks = Task.objects.none()  # Empty queryset by default
     
     if query:
-        # Search in title AND description of pending tasks for the current user
+        # Search title AND description of pending tasks for the current user
         tasks = Task.objects.filter(
             user=request.user,
             is_completed=False

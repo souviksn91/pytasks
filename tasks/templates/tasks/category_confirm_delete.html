@@ -1,11 +1,20 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Delete Category</h1>
-<p>Are you sure you want to delete the category "{{ object.name }}"?</p>
-<p class="warning"><strong>Warning:</strong> This will also delete all {{ object.tasks.count }} tasks in this category. This action cannot be undone.</p>
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" style="background-color: #dc3545; color: white;">Yes, Delete</button>
-    <a href="{% url 'tasks:category_list' %}" style="margin-left: 10px;">Cancel</a>
-</form>
+<div class="row justify-content-center">
+
+    <div class="col-md-8 col-lg-8">
+        <h2 class="heading-text mb-3">Delete "{{ object.name }}"?</h2>
+
+        <p class="sub-heading-text mb-2">Are you sure you want to delete the category "{{ object.name }}"?</p>
+        <p class="gray-text mb-4">This will also delete all <span class="black-text">{{ object.tasks.count }}</span> tasks in this category. This action cannot be undone.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn bttn-black me-2">Yes, Delete</button>
+            <a href="{% url 'tasks:category_list' %}" class="black-link-text">Cancel</a>
+        </form>
+
+    </div>
+</div>
+
 {% endblock %}

@@ -45,8 +45,8 @@ PyTasks is a **clean, minimalist task management web application** built with Dj
 1. **Create MySQL database and user**
    ```sql
    CREATE DATABASE pytasks;
-   CREATE USER 'pytasks_user'@'localhost' IDENTIFIED BY 'your_password';
-   GRANT ALL PRIVILEGES ON pytasks.* TO 'pytasks_user'@'localhost';
+   CREATE USER 'your_mysql_user'@'localhost' IDENTIFIED BY 'your_mysql_password';
+   GRANT ALL PRIVILEGES ON pytasks.* TO 'your_mysql_user'@'localhost';
    FLUSH PRIVILEGES;
    ```
 
@@ -66,10 +66,27 @@ PyTasks is a **clean, minimalist task management web application** built with Dj
    python manage.py createsuperuser
    ```
 
-### Run the Application
+
+<!-- ### Configuration
+**Environment Variables** - Create a .env file based on .env.example:
+```ini
+   # Database Configuration
+   DB_NAME=pytasks
+   DB_USER=your_mysql_user
+   DB_PASSWORD=your_mysql_password
+   DB_HOST=localhost
+   DB_PORT=3306
+
+   # Django Secret Key
+   SECRET_KEY=your-secret-key-here
+   ``` -->
+
+
+**Run the Application**
    ```bash
    python manage.py runserver
    ```
 
+**Visit http://127.0.0.1:8000/ in your browser.**
 
 

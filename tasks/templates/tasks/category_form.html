@@ -1,15 +1,11 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
 
-
-
 <div class="row justify-content-center">
 
     <div class="col-md-8 col-lg-8">
 
         <h2 class="heading-text">{% if object %}Edit{% else %}Add New{% endif %} Category</h2>
-
-
 
         <form method="post" class="">
             {% csrf_token %}
