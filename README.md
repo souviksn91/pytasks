@@ -95,3 +95,7 @@ PyTasks is a **clean, minimalist task management web application** built with Dj
 **Visit http://127.0.0.1:8000/ in your browser.**
 
 
+<br>
+
+---
+Author: **Souvik Sinha**
